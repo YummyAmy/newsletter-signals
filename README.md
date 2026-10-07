@@ -3,7 +3,9 @@
 A single-page dashboard that reads a Substack export in the browser and shows reader-level findings the Substack stats page does not.
 
 **Live tool:** https://yummyamy.github.io/newsletter-signals/
-**Write-up:** https://ameikpe.substack.com/p/how-i-built-an-advanced-substack-dashboard-using-claude-artifacts
+
+**Post:** https://ameikpe.substack.com/p/how-i-built-an-advanced-substack-dashboard-using-claude-artifacts
+
 **Original artifact:** https://claude.ai/artifact/PpwpzrNoTvEhcDNVW2EKTL
 
 Made for [Data According to Me](https://ameikpe.substack.com/) by Amy.
