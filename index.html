@@ -168,6 +168,7 @@ details.how ol{margin:4px 0 0;padding-left:1.2em;color:var(--ink2);max-width:68c
 .legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
 .legend i.sq{height:10px;width:10px}
 .cap{font-size:.8125rem;color:var(--ink3)}
+.appbox{margin-top:14px;border:1.5px dashed var(--dash);border-radius:var(--r-sm);padding:14px 16px;display:flex;flex-direction:column;gap:6px}.appbox h4{margin:0;font-weight:600;font-size:1rem}.appbox p{margin:0;font-size:.9375rem;color:var(--ink2);max-width:72ch}
 .locked{border:1.5px dashed var(--ctx);border-radius:var(--r);padding:18px;color:var(--ink2)}
 .sim{display:flex;flex-direction:column;gap:14px}
 .sim label{font-weight:500}
@@ -594,7 +595,12 @@ function render(M){
     out.push(panel("list","Who is on your list",["Of ",b(num(N))," subscribers, ",b(num(c.core))," are regulars, ",b(num(c.lapsed))," used to open and have no recent recorded open, ",b(num(c.never))," have no recorded open at all, and ",b(num(c.unreached))," were not sent recent emails."],
       c.unreached>N*.05?"The export does not say why some subscribers get no email. Two possibilities: they chose to read in the Substack app, or their address stopped accepting mail. These are possibilities, not findings.":"Every subscriber sits in one group, based on what was delivered to them and what was recorded as opened.",
       c.never>c.core?"The group with no recorded open is bigger than the regulars. The List review tab lists them.":"Regulars outnumber the group with no recorded open.",[host]));
-    hbars(host,defs.filter(d=>c[d[0]]).map(d=>({k:d[1],sub:d[2],f:c[d[0]]/N,v:num(c[d[0]]),v2:pct(c[d[0]]/N),tip:[num(c[d[0]])+" of "+num(N)+" subscribers"]}))) }
+    hbars(host,defs.filter(d=>c[d[0]]).map(d=>({k:d[1],sub:d[2],f:c[d[0]]/N,v:num(c[d[0]]),v2:pct(c[d[0]]/N),tip:[num(c[d[0]])+" of "+num(N)+" subscribers"]})))
+    if(M.hasAct){const g={never:0,lapsed:0,unreached:0};M.on.forEach(x=>{if(x.act>0&&g[x.st]!==undefined)g[x.st]++});const t=g.never+g.lapsed+g.unreached;
+      if(t){const box=el("div",{class:"appbox"},el("h4",null,"Possible app readers: "+num(t)),
+        el("p",null,"These subscribers have no recent recorded email open but an Activity rating of 1 star or more in the subscriber export: "+num(g.never)+" with no recorded open, "+num(g.lapsed)+" who used to open, and "+num(g.unreached)+" not getting emails."),
+        el("p",null,"Substack's Activity rating can reflect engagement outside email, such as reading, liking or commenting in the app. Substack does not document exactly what it counts, so treat these as possible readers, not confirmed ones. List review keeps them by default."));
+        host.after(box)}} }
 
   /* first email */
   if(K>=3){ const host=el("div"),y=R.yes[K-1],n=R.no[K-1];
