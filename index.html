@@ -120,7 +120,7 @@ details.how ol{margin:4px 0 0;padding-left:1.2em;color:var(--ink2);max-width:68c
 .banner.busy{background:var(--accent-soft);color:var(--ink)}
 .spinr{width:16px;height:16px;border:2px solid var(--ctx);border-top-color:var(--accent);border-radius:50%;animation:turn .8s linear infinite;flex:none}
 /* signal boxes: dim until the pointer is on one */
-.sigs{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:12px}
+.sigs{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
 .sig{font:inherit;text-align:left;color:var(--ink);background:var(--card);border:1.5px solid var(--rule);border-radius:var(--r);padding:16px 18px;display:flex;flex-direction:column;gap:6px;min-height:168px;cursor:pointer;opacity:.5;transition:opacity .18s,border-color .18s,transform .18s}
 .sig .l{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
 .sig .v{font-family:var(--display);font-weight:700;font-size:2.3rem;line-height:1.05;letter-spacing:-.01em;font-variant-numeric:tabular-nums;visibility:hidden}
@@ -571,6 +571,7 @@ function render(M){
     ["list","No recorded open",num(c.never),"were sent emails and have no open on record"],
     ["list","Used to open, then stopped",num(c.lapsed),"used to open and have no open in the last "+M.R],
     ["list","Not getting emails",num(c.unreached),"are on the list but no recent email was delivered to them"],
+    M.hasAct?(()=>{const n=M.on.filter(x=>x.act>0&&(x.st==="never"||x.st==="lapsed"||x.st==="unreached")).length;return n?["list","Possible app readers",num(n),"no recent email open, but Substack rates them active (1+ star)"]:null})():null,
     ["first","First-email opens",pct(R.all[0]),"of subscribers have a recorded open on the first email sent to them"],
     K>=3?["first","Open rate at email #"+K,pct(R.yes[K-1])+" vs "+pct(R.no[K-1]),"opened their first email vs did not"]:null,
     ["real","Open range",pct(T.lo)+" to "+pct(T.hi),"conservative (without possible Apple Mail privacy opens) to inclusive (with them)"]].filter(Boolean);
